@@ -1,3 +1,8 @@
+Updating tensorflow-metadata-feedstock
+===================================
+
+Although this isn't a fork of conda-forge's feedstock, it's a copy, with some changes to make it work for defaults. To update this feedstock to the latest version of the conda-forge one, pull conda-forge's updates using your favourite git mechanism, making sure that afterwards the changes from https://github.com/AnacondaRecipes/tensorflow-metadata-feedstock/pull/1 are still applied.
+
 About tensorflow-metadata-feedstock
 ===================================
 
