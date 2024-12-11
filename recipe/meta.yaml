@@ -41,8 +41,12 @@ test:
 about:
   home: https://pypi.org/project/tensorflow-metadata/
   summary: Library and standards for schema and statistics.
+  description: TensorFlow Metadata provides standard representations for metadata that are useful when training machine learning models with TensorFlow.
   license: Apache-2.0
   license_file: LICENSE
+  license_family: Apache
+  doc_url: https://pypi.org/project/tensorflow-metadata/
+  dev_url: https://github.com/tensorflow/metadata
 
 extra:
   recipe-maintainers:
