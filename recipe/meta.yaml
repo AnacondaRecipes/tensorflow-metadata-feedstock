@@ -13,7 +13,7 @@ source:
 build:
   number: 0
   skip: True  # [py<39]
-  script: {{ PYTHON }} -m pip install --no-deps --ignore-installed --no-build-isolation tensorflow_metadata-${PKG_VERSION}-py3-none-any.whl
+  script: {{ PYTHON }} -m pip install --no-deps --ignore-installed --no-build-isolation tensorflow_metadata-{{ version }}-py3-none-any.whl
 
 
 
