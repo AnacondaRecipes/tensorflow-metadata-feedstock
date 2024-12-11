@@ -1,48 +1,48 @@
-{% set version = "0.14.0" %}
+{% set name = "tensorflow-metadata" %}
+{% set version = "1.15.0" %}
+
 
 package:
-  name: tensorflow-metadata
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/tensorflow/metadata/archive/v{{ version }}.tar.gz
-  sha256: f14b88f3b72b3419ca95c016dd4c6251179f33f375deceb5d9bf3d3bf51ba9cc
+  url: https://pypi.io/packages/py3/t/tensorflow-metadata/tensorflow_metadata-{{ version }}-py3-none-any.whl
+  sha256: cb84d8e159128aeae7b3f6013ccd7969c69d2e6d1a7b255dbfa6f5344d962986
 
 build:
-  number: 1
-  # This is a noarch: python package, it contains no compiled code but a
-  # compiler is required to convert protocol buffer definitions.
-  # The build has only been tested on linux-64
+  number: 0
   noarch: python
-  skip: True  # [not linux]
-  ignore_run_exports:
-    - libgcc-ng
-    - libstdcxx-ng
+
 
 requirements:
-  build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - bazel
   host:
-    - python
     - pip
+    - python >=3.7
   run:
-    - python
-    - protobuf >=3.7,<4
-    - googleapis-common-protos
-    - tensorflow
-
+    - googleapis-common-protos >=1.56.4,<2
+    - protobuf >=4.25.2,<5
+    - absl-py >=0.9,<3.0.0
+    - python >=3.7
 test:
   imports:
     - tensorflow_metadata
+    - tensorflow_metadata.proto
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
-  home: https://www.tensorflow.org/metadata
+  home: https://pypi.org/project/tensorflow-metadata/
+  summary: Library and standards for schema and statistics.
   license: Apache-2.0
   license_file: LICENSE
-  summary: Library and standards for schema and statistics.
 
 extra:
   recipe-maintainers:
-    - jjhelmus
+    - mxr-conda
+    - rluria14
+    - oblute
+    - ndmaxar
+    - ngam
