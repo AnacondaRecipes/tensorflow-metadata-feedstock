@@ -1,21 +1,18 @@
 {% set name = "tensorflow-metadata" %}
-{% set version = "1.16.1" %}
-
+{% set version = "1.17.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/py3/t/tensorflow-metadata/tensorflow_metadata-{{ version }}-py3-none-any.whl
-  sha256: 2ce72ea31d78a00c0c74c6d465482335aa5cb2a3b2a104dedba0b258bc7bb18a
+  url: https://pypi.org/packages/py3/t/tensorflow-metadata/tensorflow_metadata-{{ version }}-py3-none-any.whl
+  sha256: 7da3f8501d6ccfcdbe1a56e975c3624150ce6829048ab9efe62409c362d509b4
 
 build:
   number: 0
-  skip: True  # [py<39]
+  skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed --no-build-isolation tensorflow_metadata-{{ version }}-py3-none-any.whl
-
-
 
 requirements:
   host:
@@ -29,6 +26,7 @@ requirements:
     - protobuf >=4.25.2,<6  # [py>=311]
     - protobuf >=3.20.3,<4.21  # [py<311]
     - absl-py >=0.9,<3.0.0
+
 test:
   imports:
     - tensorflow_metadata
