@@ -12,7 +12,7 @@ source:
 build:
   number: 0
   # Skip py310 as well since no protobuf >=4.21.6,<4.22 is available for py310
-  skip: true  # [py<310]
+  skip: true  # [py<311]
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed --no-build-isolation {{ name|replace("-", "_") }}-{{ version }}-py3-none-any.whl
 
 requirements:
