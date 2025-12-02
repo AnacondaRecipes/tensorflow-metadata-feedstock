@@ -11,7 +11,8 @@ source:
 
 build:
   number: 0
-  skip: true  # [py<39]
+  # Skip py310 as well since no protobuf >=4.21.6,<4.22 is available for py310
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed --no-build-isolation {{ name|replace("-", "_") }}-{{ version }}-py3-none-any.whl
 
 requirements:
@@ -25,7 +26,6 @@ requirements:
     - absl-py >=0.9,<3.0.0
     - googleapis-common-protos >=1.56.4,<2  # [py>=311]
     - protobuf >=4.25.2  # [py>=311]
-    - protobuf >=4.21.6,<4.22  # [py<311]
 
 test:
   imports:
