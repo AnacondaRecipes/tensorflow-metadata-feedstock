@@ -1,5 +1,5 @@
 {% set name = "tensorflow-metadata" %}
-{% set version = "1.17.2" %}
+{% set version = "1.17.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,11 @@ package:
 
 source:
   url: https://pypi.org/packages/py3/{{ name[0] }}/{{ name }}/{{ name|replace("-", "_") }}-{{ version }}-py3-none-any.whl
-  sha256: 7da3f8501d6ccfcdbe1a56e975c3624150ce6829048ab9efe62409c362d509b4
+  sha256: 452912e6398b3cb7302f0de6139dea794b3be1bd0eb40e6765eb3a04e51ea991
 
 build:
   number: 0
-  # Skip py310 as well since no protobuf >=4.21.6,<4.22 is available for py310
-  skip: true  # [py<311]
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed --no-build-isolation {{ name|replace("-", "_") }}-{{ version }}-py3-none-any.whl
 
 requirements:
@@ -24,8 +23,9 @@ requirements:
   run:
     - python
     - absl-py >=0.9,<3.0.0
-    - googleapis-common-protos >=1.56.4,<2  # [py>=311]
-    - protobuf >=4.25.2  # [py>=311]
+    - googleapis-common-protos >=1.56.4,<2 # [py>=311]
+    - protobuf >=4.25.2 # [py>=311]
+    - protobuf >=4.21.6,<=6.32 # [py<311]
 
 test:
   imports:
