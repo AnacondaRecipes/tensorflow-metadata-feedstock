@@ -26,8 +26,13 @@ requirements:
     - python
     - absl-py >=0.9,<3.0.0
     - googleapis-common-protos >=1.56.4,<2 # [py>=311]
-    - protobuf >=4.25.2 # [py>=311]
-    - protobuf >=4.21.6,<=6.32 # [py<311]
+    # google.protobuf.runtime_version.VersionError:
+    # Detected mismatched Protobuf Gencode/Runtime major versions when loading tensorflow_metadata/proto/v0/anomalies.proto: gencode 6.31.1 runtime 5.29.3. Same major version is required.
+    # See Protobuf version guarantees at https://protobuf.dev/support/cross-version-runtime-guarantee.
+    # +++++++++++++++
+    # Single py3-none-any wheel for ALL python_requires (>=3.10,<4) -> one gencode version (6.31.1) applies regardless of py branch.
+    # Drop the per-branch split for protobuf; it no longer reflects a real difference in the artifact.
+    - protobuf >=6,<7
 
 test:
   imports:
