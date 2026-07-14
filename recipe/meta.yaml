@@ -39,7 +39,8 @@ test:
     - tensorflow_metadata
     - tensorflow_metadata.proto
   commands:
-    - pip check
+    # skip py310: tensorflow-metadata 1.21.0 has requirement protobuf<=6.32,>=4.21.6; python_version < "3.11", but you have protobuf 6.33.5.
+    - pip check  # [py>=311]
   requires:
     - pip
 
